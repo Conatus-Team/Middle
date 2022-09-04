@@ -10,6 +10,8 @@ import com.moine.middle.event.group.GroupJoined;
 import com.moine.middle.event.group.GroupSearched;
 import com.moine.middle.event.group.PostAccessCounted;
 import com.moine.middle.event.lecture.LectureDetailShown;
+import com.moine.middle.event.lecture.LectureLiked;
+import com.moine.middle.event.lecture.LectureSearched;
 import com.moine.middle.service.MiddleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -109,9 +111,33 @@ public class MiddleController {
         return "LectureDetailShown Success";
     }
 
+    // PUBLISHER : LECTURE
+    // CONSUMER : RECOMMEND
+    @PostMapping("/LectureLiked")
+    public String sendLectureLiked(@RequestBody LectureLiked lectureLiked) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(lectureLiked);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
 
+        return "LectureLiked Success";
+    }
 
+    // PUBLISHER : LECTURE
+    // CONSUMER : RECOMMEND
+    @PostMapping("/LectureSearched")
+    public String sendLectureSearched(@RequestBody LectureSearched lectureSearched) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(lectureSearched);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
 
+        return "LectureSearched Success";
+    }
 
 
 
