@@ -3,11 +3,15 @@ package com.moine.middle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moine.middle.domain.Url;
 import com.moine.middle.event.auth.SignedUp;
 import com.moine.middle.event.group.GroupDetailShown;
 import com.moine.middle.event.group.GroupJoined;
 import com.moine.middle.event.group.GroupSearched;
 import com.moine.middle.event.group.PostAccessCounted;
+import com.moine.middle.event.lecture.LectureDetailShown;
+import com.moine.middle.event.lecture.LectureLiked;
+import com.moine.middle.event.lecture.LectureSearched;
 import com.moine.middle.service.MiddleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +22,16 @@ import org.springframework.web.bind.annotation.*;
 public class MiddleController {
     private final MiddleService middleService;
 
-    private static final String LOCAL_URL = "http://localhost:";
-    private static final String RELEASE_URL = "";
-
-    private static final String AUTH = LOCAL_URL + "8082" + "/auth/connect_middle";
-    private static final String LECTURE = LOCAL_URL + "8084" + "/lecture/connect_middle";
-    private static final String GROUP = LOCAL_URL + "8083" + "/group/connect_middle";
-    private static final String CHATTING = LOCAL_URL +  "8085"+ "/chatting/connect_middle";
-    private static final String RECOMMEND = LOCAL_URL + "8086" + "/recommend/connect_middle";
-    private static final String FRONT = "";
-
     // PUBLISHER : AUTH
     // CONSUMER : LECTURE, GROUP, CHATTING, RECOMMEND
     @PostMapping("/SignedUp")
     public String sendSignedUp(@RequestBody SignedUp signedUp) {
 //        {eventType=SignedUp, timestamp=1662031796711, userId=20, email=ddgf55@gmail.com, password=385, userName=co, userNickname=co}
 
-        middleService.sendTo(GROUP+"/SignedUp", signedUp);
-//        middleService.sendTo(LECTURE+"/SignedUp", signedUp);
-//        middleService.sendTo(CHATTING+"/SignedUp", signedUp);
-//        middleService.sendTo(RECOMMEND+"/SignedUp", signedUp);
+        middleService.sendTo(Url.GROUP.getUrl()+"/SignedUp", signedUp);
+        middleService.sendTo(Url.LECTURE.getUrl()+"/SignedUp", signedUp);
+//        middleService.sendTo(Url.CHATTING.getUrl()+"/SignedUp", signedUp);
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/SignedUp", signedUp);
 
         return "SignedUp Success";
     }
@@ -52,8 +46,8 @@ public class MiddleController {
         System.out.println("object" + object);
         System.out.println("==========================================");
         System.out.println("==========================================");
-//        middleService.sendTo(CHATTING+"/GroupJoined", groupJoined);
-//        middleService.sendTo(RECOMMEND+"/GroupJoined", groupJoined);
+//        middleService.sendTo(Url.CHATTING.getUrl()+"/GroupJoined", groupJoined);
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/GroupJoined", groupJoined);
 
         return "GroupJoined Success";
     }
@@ -69,7 +63,7 @@ public class MiddleController {
         System.out.println("object" + object);
         System.out.println("==========================================");
         System.out.println("==========================================");
-//        middleService.sendTo(RECOMMEND+"/GroupSearched", groupSearched);
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/GroupSearched", groupSearched);
 
         return "GroupSearched Success";
     }
@@ -83,7 +77,7 @@ public class MiddleController {
         System.out.println("object" + object);
         System.out.println("==========================================");
         System.out.println("==========================================");
-//        middleService.sendTo(RECOMMEND+"/GroupDetailShown", groupDetailShown);
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/GroupDetailShown", groupDetailShown);
 
         return "GroupDetailShown Success";
     }
@@ -97,14 +91,53 @@ public class MiddleController {
         System.out.println("object" + object);
         System.out.println("==========================================");
         System.out.println("==========================================");
-//        middleService.sendTo(RECOMMEND+"/PostAccessCounted", postAccessCounted);
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
 
         return "PostAccessCounted Success";
     }
 
 
+    // PUBLISHER : LECTURE
+    // CONSUMER : RECOMMEND
+    @PostMapping("/LectureDetailShown")
+    public String sendLectureDetailShown(@RequestBody LectureDetailShown lectureDetailShown) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(lectureDetailShown);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
 
+        return "LectureDetailShown Success";
+    }
 
+    // PUBLISHER : LECTURE
+    // CONSUMER : RECOMMEND
+    @PostMapping("/LectureLiked")
+    public String sendLectureLiked(@RequestBody LectureLiked lectureLiked) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(lectureLiked);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
+
+        return "LectureLiked Success";
+    }
+
+    // PUBLISHER : LECTURE
+    // CONSUMER : RECOMMEND
+    @PostMapping("/LectureSearched")
+    public String sendLectureSearched(@RequestBody LectureSearched lectureSearched) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(lectureSearched);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/PostAccessCounted", postAccessCounted);
+
+        return "LectureSearched Success";
+    }
 
 
 
