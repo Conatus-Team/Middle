@@ -8,6 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PostAccessCounted {
+    String eventType;
+    Long timestamp;
+
     private Long id;
     private Long groupId;
     private Long userId;
