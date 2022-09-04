@@ -30,7 +30,7 @@ public class MiddleController {
 
         middleService.sendTo(Url.GROUP.getUrl()+"/SignedUp", signedUp);
         middleService.sendTo(Url.LECTURE.getUrl()+"/SignedUp", signedUp);
-//        middleService.sendTo(Url.CHATTING.getUrl()+"/SignedUp", signedUp);
+        middleService.sendTo(Url.CHATTING.getUrl()+"/SignedUp", signedUp);
 //        middleService.sendTo(Url.RECOMMEND.getUrl()+"/SignedUp", signedUp);
 
         return "SignedUp Success";
@@ -46,7 +46,7 @@ public class MiddleController {
         System.out.println("object" + object);
         System.out.println("==========================================");
         System.out.println("==========================================");
-//        middleService.sendTo(Url.CHATTING.getUrl()+"/GroupJoined", groupJoined);
+        middleService.sendTo(Url.CHATTING.getUrl()+"/GroupJoined", groupJoined);
 //        middleService.sendTo(Url.RECOMMEND.getUrl()+"/GroupJoined", groupJoined);
 
         return "GroupJoined Success";

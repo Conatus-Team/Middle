@@ -8,6 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GroupSearched {
+    String eventType;
+    Long timestamp;
+
     Long id;
     Long userId;
     String keyword;

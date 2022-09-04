@@ -17,6 +17,10 @@ public class GroupJoined {
 
     Member member;
 
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     public class Member {
         LocalDateTime createdTime;

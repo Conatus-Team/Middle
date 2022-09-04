@@ -8,6 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GroupDetailShown {
+    String eventType;
+    Long timestamp;
 
     Long id;
     Long userId;
