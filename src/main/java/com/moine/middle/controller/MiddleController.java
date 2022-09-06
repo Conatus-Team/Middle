@@ -25,13 +25,18 @@ public class MiddleController {
     // PUBLISHER : AUTH
     // CONSUMER : LECTURE, GROUP, CHATTING, RECOMMEND
     @PostMapping("/SignedUp")
-    public String sendSignedUp(@RequestBody SignedUp signedUp) {
+    public String sendSignedUp(@RequestBody SignedUp signedUp) throws JsonProcessingException {
 //        {eventType=SignedUp, timestamp=1662031796711, userId=20, email=ddgf55@gmail.com, password=385, userName=co, userNickname=co}
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(signedUp);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
 
         middleService.sendTo(Url.GROUP.getUrl()+"/SignedUp", signedUp);
         middleService.sendTo(Url.LECTURE.getUrl()+"/SignedUp", signedUp);
         middleService.sendTo(Url.CHATTING.getUrl()+"/SignedUp", signedUp);
-//        middleService.sendTo(Url.RECOMMEND.getUrl()+"/SignedUp", signedUp);
+        middleService.sendTo(Url.RECOMMEND.getUrl()+"/SignedUp", signedUp);
 
         return "SignedUp Success";
     }
