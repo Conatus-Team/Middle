@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: 357806352922.dkr.ecr.ap-northeast-2.amazonaws.com/moine_gateway:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: moine-backend-configmap
+
+#          env:
+#            - name: DATABASE_URL
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: lecture_database_url
+#            - name: DATABASE_USERID
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: database_userid
+#            - name: DATABASE_PASSWORD
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: database_password
+#            - name: KAFKA_BROKERS
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: kafka_brokers
+#            - name: KAFKA_BOOTSTRAP_SERVERS
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: kafka_bootstrap_servers
+#            - name: SERVER_PORT
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: server_port
+#            - name: PING_MSG
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: moine-backend-configmap
+#                  key: ping_msg
