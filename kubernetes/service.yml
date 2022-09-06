@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-backend-svc
+  labels:
+    app: gateway-backend-svc
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      name: gateway
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: gateway
