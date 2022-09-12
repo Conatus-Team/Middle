@@ -3,15 +3,19 @@ package com.moine.middle.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
+
 @Service
 @RequiredArgsConstructor
 public class MiddleService {
 
+    @Async
     public String sendTo(String url, Object body) {
 
         // header

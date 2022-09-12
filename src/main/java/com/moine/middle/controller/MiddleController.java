@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moine.middle.domain.Url;
 import com.moine.middle.event.auth.SignedUp;
-import com.moine.middle.event.group.GroupDetailShown;
-import com.moine.middle.event.group.GroupJoined;
-import com.moine.middle.event.group.GroupSearched;
-import com.moine.middle.event.group.PostAccessCounted;
+import com.moine.middle.event.group.*;
 import com.moine.middle.event.lecture.LectureDetailShown;
 import com.moine.middle.event.lecture.LectureLiked;
 import com.moine.middle.event.lecture.LectureSearched;
@@ -21,6 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value="/middle")
 public class MiddleController {
     private final MiddleService middleService;
+
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello Middle";
+    }
 
     // PUBLISHER : AUTH
     // CONSUMER : LECTURE, GROUP, CHATTING, RECOMMEND
@@ -41,6 +44,19 @@ public class MiddleController {
         return "SignedUp Success";
     }
 
+    // PUBLISHER : GROUP
+    // CONSUMER : CHATTING */
+    @PostMapping("/GroupCreated")
+    public String sendGroupCreated(@RequestBody GroupCreated groupCreated) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = objectMapper.writeValueAsString(groupCreated);
+        System.out.println("object" + object);
+        System.out.println("==========================================");
+        System.out.println("==========================================");
+        middleService.sendTo(Url.CHATTING.getUrl()+"/GroupCreated", groupCreated);
+
+        return "GroupCreated Success";
+    }
 
     // PUBLISHER : GROUP
     // CONSUMER : CHATTING, RECOMMEND */
